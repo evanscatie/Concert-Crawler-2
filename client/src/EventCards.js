@@ -14,6 +14,11 @@ class EventCards extends React.Component {
         {
             
           this.props.artistEvents.map((event,index) => {
+            // Careful with this function. It calls setState, 
+            // and calling setState within render() is a bad idea.
+            // It's currently not a problem, since you're not rendering
+            // anything in state.
+            // If you were, it would cause the "too much recursion" error.
               this._eventDoesExist(event)
             return (
               <div>

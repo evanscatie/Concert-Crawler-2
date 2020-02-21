@@ -3,9 +3,10 @@ import React from 'react';
 class ArtistCards extends React.Component {
   constructor(props){
     super(props);
-    this.state = {
-      names: '',
-    }
+    // Not needed, since you're only working off of props.
+    // this.state = {
+      // names: '',
+    // }
   };
   
   render() {
