@@ -36,3 +36,159 @@
     transform: rotate(360deg);
   }
 }
+
+body {
+  background-color: rgba(3, 3, 3, 0.918);
+  
+}
+
+
+html, body {
+  height: 100%;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.artist-card {
+  max-width: 315px;
+  background: rgba(65, 64, 64, 0.13);
+  outline: 1px solid transparent;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.308), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 25px
+
+}
+
+.saved-event-card {
+  max-width: 315px;
+  min-width: 315px;
+  background: rgba(65, 64, 64, 0.13);
+  outline: 1px solid transparent;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 25px;
+  color: white
+}
+
+.img-card {
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  outline: 1px solid transparent;
+
+}
+
+.upcoming-shows-btn {
+  border-radius: 25px
+}
+
+.artist-row {
+  -webkit-overflow-scrolling: touch; /* [3] */
+  -ms-overflow-style: -ms-autohiding-scrollbar; /* [4] */ 
+}
+
+.artist-row::-webkit-scrollbar {
+  display: none; }
+
+
+.saved-events-row {
+  -webkit-overflow-scrolling: touch; /* [3] */
+  -ms-overflow-style: -ms-autohiding-scrollbar; /* [4] */ 
+}
+
+.saved-events-row::-webkit-scrollbar {
+  display: none; }
+
+.artist-name {
+  color: white;
+}
+
+.event-card {
+  width: 100%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.541), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  border-radius: 25px;
+  background: rgba(44, 43, 43, 0.904);
+  outline: 1px solid transparent;
+  color: white;
+
+}
+
+.save-event-btn{
+  border-radius: 25px;
+  width: 90%;
+}
+
+.modal-content{
+  background-color: rgba(15, 15, 15, 0.178);
+}
+
+.image-wrapper {
+  background: url(/person-singing-1370545.jpg) no-repeat center center fixed;
+  display: table;
+  height: 100%;
+  position: relative;
+  width: 100%;
+  background-size: cover;
+}
+
+.home-main-container {
+  display: table;
+  height: 100%;
+  position: relative;
+  width: 100%;
+}
+
+
+.home-main-content {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  font-family: 'Varela', sans-serif;
+  color: white;
+  height: 100vh;
+}
+
+.home-main-content h1 {
+  font-size: 5m;
+  font-weight: 500;
+}
+
+.logo {
+  border-radius: 10px;
+}
+
+.page-header {
+  font-size: 18px;
+  color: white;
+}
+
+.hr{
+  background-color: rgba(255, 255, 255, 0.459);
+}
+
+.default-saved-events{
+  min-height: 300px;
+}
+
+.nav-item {
+  color: rgba(255, 255, 255, 0.616);
+  border: none;
+}
+
+.event-card-img{
+  min-height: 130px;
+  min-width: 130px;
+  border-radius: 25px;
+}
+
+.modal-title {
+  color: rgba(255, 255, 255, 0.795);
+}
+
+.card-title {
+  color: rgba(255, 255, 255, 0.644);
+  font-size: 15px;
+  text-transform: uppercase;
+  text-decoration: yellowgreen, 1px;
+}
+
+.event-hr {
+  background-color: rgba(243, 235, 235, 0.308);
+}
