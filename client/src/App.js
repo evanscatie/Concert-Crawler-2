@@ -4,17 +4,21 @@ import axios from 'axios';
 import SpotifyWebApi from 'spotify-web-api-js';
 import ArtistCards from './ArtistCards';
 import EventCards from './EventCards';
-// import UpcomingShow from './UpcomingShows';
-// import {
-//   BrowserRouter as Router, 
-//   Switch, 
-//   Route,
-//   Link
-// } from "react-router-dom"
+import SavedEvents from './SavedEvents';
+import Nav from './Nav';
+import Landing from './Landing'
+
+import {
+  BrowserRouter as Router, 
+
+  Switch, 
+  Route,
+  Link
+} from "react-router-dom"
 
 
 // EVENT AUTHORIZATION
-const spotifyApi = new SpotifyWebApi() // Spotify API Library
+
 function eventfulApiCall(artist) {
   let settings = {
     "headers": {
@@ -24,10 +28,13 @@ function eventfulApiCall(artist) {
     }
   }
   const eventfulEndpoint = 'http://api.eventful.com/json/events/search?...&keywords=' // Eventful URL
-  const appKey = 'CXHGMvbQBshRwpqL'
+  const appKey = 'cBZcx4Cp3XN4MsBc'
   const eventfulAddress = {url: `https://cors-anywhere.herokuapp.com/${eventfulEndpoint}${encodeURI(artist)}&app_key=${appKey}&date=future`, ...settings}
   return eventfulAddress
 }
+
+const spotifyApi = new SpotifyWebApi() // Spotify API Library
+
 
 
 class App extends React.Component {
@@ -40,28 +47,40 @@ class App extends React.Component {
     this.state = {
       loggedIn: token ? true : false, // Logged In Condition
       topTenArtist: [],
-      artistEvents: []
+      currentArtist: '',
+      currentArtistEvents: [],
+      isLoaded: '',
+      savedEvents: []
     }
     console.log(token)
   }
 
   render() { 
     return (
-      // <Router>
-        <div className="App">
-          <a href='http://localhost:8888' > Login to Spotify </a>
-          {/* <li><Link to="/">Home</Link></li> */}
-            <button onClick={this._getArtistEvents()}>Show artist events</button>
-            <ArtistCards topTenArtist={this.state.topTenArtist}/>
-            {/* <EventCards artistEvents={this.state.artistEvents} />
-          */}
-        </div>
-        /* <Switch>
-          <Route exact path='/'>
-            <Home/>
-          </Route>
-        </Switch>
-      </Router>  */
+          this.state. loggedIn ?
+            <Router>
+              <div className="App">
+                <Nav links={['Home','Profile','Contact']}/>
+                <div className='container'>
+                  <h1 className='page-header m-4 mb-0 ml-0 pl-0  pb-0 text-left'>YOUR TOP ARTIST</h1>
+                  <hr className="hr mb-4"/>
+                </div>
+                  <ArtistCards topTenArtist={this.state.topTenArtist} artistEvents={this._getArtistEvents}/>
+                  <EventCards currentArtist={this.state.currentArtist} currentArtistEvents={this.state.currentArtistEvents} isLoaded={this.state.isLoaded} saveEvent={this._saveEvent}/>
+                <div className='container'>
+                  <h1 className='page-header m-4 mb-0 mt-4 ml-0 pl-0 pb-0 text-left'>EVENTS YOU'VE LIKED</h1>
+                  <hr className="hr mb-4"/>
+                </div>
+                <div className="default-saved-events">
+                    <SavedEvents savedEvents={this.state.savedEvents}/>
+                </div>
+              </div>
+            </Router>  
+            :
+            <div className='image-wrapper'>
+              <Nav links={['Home','Profile','Contact']}/>
+              <Landing/>
+            </div>
     );
   }
 
@@ -70,7 +89,6 @@ class App extends React.Component {
  
   }
   
-
   _getTopTenArtist = () =>  {
     spotifyApi.getMyTopArtists()
       .then(response => {
@@ -82,33 +100,48 @@ class App extends React.Component {
       })
   }
 
-  _getArtistEvents = () => {
-    this.state.topTenArtist.map((artist) => {
-      let artistName = artist.name
-      console.log(artistName)
-      console.log(eventfulApiCall(artistName))
+  _getArtistEvents = (artist) => {
+    let artistName = artist.name
+    this.setState({
+      currentArtist: artistName,
+      currentArtistEvents: []
+    }, () => {
+      console.log(this.state.currentArtist)
       axios(eventfulApiCall(artistName)) 
       .then(response => {
         try {
           console.log(response)
           console.log(response.data.events.event)
-          const artistEvents = response.data.events.event
-          // this.setState({
-          //   artistEvents: artistEvents
-          // })
-          console.log(this.state.artistEvents)
+          let currentArtistEvents = response.data.events.event.slice(0,5);
+          this.setState({
+            ...this.state,
+            isLoaded: true,
+            currentArtistEvents: currentArtistEvents
+          }, () => {
+            console.log(this.state.currentArtistEvents)
+          })
         }catch(e){
           console.log(e)
         }
       })
     })
-  }
+  }   
+  
 
   // Sets the Access Token to be Used
   _setAccessToken(token) {
     if (token) {
       spotifyApi.setAccessToken(token);
     }
+  }
+
+  _saveEvent = (event) => {
+    const savedEvents = this.state.savedEvents;
+    this.setState({
+      savedEvents: savedEvents.concat(event)
+    }, () => {
+      console.log(this.state.savedEvents)
+    })
   }
 
   // Saves Access Token
@@ -123,10 +156,6 @@ class App extends React.Component {
     }
     return hashParams;
   }
-
-
-
-
 }
 
 export default App;
