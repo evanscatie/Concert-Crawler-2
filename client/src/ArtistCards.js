@@ -1,3 +1,5 @@
+import React from 'react';
+
 class ArtistCards extends React.Component {
   constructor(props){
     super(props);
